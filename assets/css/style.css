@@ -1,0 +1,190 @@
+/* Default Styling for Icon */
+.button-icon {
+    padding: 8px;
+}
+
+.button-icon svg {
+    fill: #000;
+    width: 20px;
+    height: 20px;
+}
+
+.advance_icon_box:hover .button-wrapper {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    transform: scale(1.05);
+    cursor:pointer;
+}
+
+
+/*Hover*/
+
+/*.advance_icon_box_hover_animation {*/
+/*    transition: all 0.3s ease;*/
+/*}*/
+
+/*.advance_icon_box_hover_animation.elementor-animation-grow:hover {*/
+/*    transform: scale(1.1);*/
+/*}*/
+
+/*.advance_icon_box_hover_animation.elementor-animation-fade:hover {*/
+/*    opacity: 0.7;*/
+/*}*/
+
+
+
+/*predefined*/
+.advance_icon_box{
+    position:relative;
+}
+.advance_icon_box h1 {
+    font-size: 36px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 20px;
+}
+
+.advance_icon_box h2 {
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 18px;
+}
+
+.advance_icon_box h3 {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 16px;
+}
+
+.advance_icon_box h4 {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 14px;
+}
+
+.advance_icon_box h5 {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+.advance_icon_box h6 {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+.advance_icon_box p {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.advance_icon_box span {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.6;
+}
+
+/***************************** Container Icon Position Change *******************************************/
+/*.advance_icon_box.icon-position-top {*/
+/*    !*display: flex;*!*/
+/*    !*flex-direction: column;*!*/
+/*    !*align-items: center;*!*/
+/*    !*text-align: center;*!*/
+/*}*/
+.advance_icon_box.icon-position-top .advance_icon_box_media {
+    margin-bottom: 10px;
+}
+
+.advance_icon_box.icon-position-left {
+    display: flex;
+    /*align-items: center;*/
+    /*text-align: left;*/
+}
+
+.advance_icon_box.icon-position-left .advance_icon_box_media {
+    margin-right: 10px;
+}
+
+.advance_icon_box.icon-position-right {
+    display: flex;
+    /*align-items: center;*/
+    flex-direction: row-reverse;
+    /*text-align: left;*/
+}
+
+.advance_icon_box.icon-position-right .advance_icon_box_media {
+    margin-left: 10px;
+}
+
+/*Badge section*/
+.badge {
+    position: absolute;
+    /*background: #ff0000;*/
+    /*color: #fff;*/
+    /*padding: 5px 10px;*/
+    /*border-radius: 3px;*/
+    font-size: 12px;
+    z-index: 10;
+}
+
+.badge-top_left {
+    top: 0;
+    left: 0;
+    /*transform: translate(-50%, -50%);*/
+}
+
+.badge-top_center {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    /*transform: translate(-50%, -50%);*/
+}
+
+.badge-top_right {
+    top: 0;
+    right: 0;
+    /*transform: translate(50%, -50%);*/
+}
+
+.badge-center_left {
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    /*transform: translate(-50%, -50%);*/
+}
+
+.badge-center_right {
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    /*transform: translate(50%, -50%);*/
+}
+
+.badge-bottom_left {
+    bottom: 0;
+    left: 0;
+    /*transform: translate(-50%, 50%);*/
+}
+
+.badge-bottom_center {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    /*transform: translate(-50%, 50%);*/
+}
+
+.badge-bottom_right {
+    bottom: 0;
+    right: 0;
+    /*transform: translate(50%, 50%);*/
+}
+
+
+
