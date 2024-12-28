@@ -150,33 +150,6 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 ],
             ]
         );
-        $this->add_control(
-            'button_alignment',
-            [
-                'label' => __('Button Alignment', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::CHOOSE,
-                'options' => [
-                    'left' => [
-                        'title' => __('Left', 'ad_icon_box'),
-                        'icon' => 'eicon-text-align-left',
-                    ],
-                    'center' => [
-                        'title' => __('Center', 'ad_icon_box'),
-                        'icon' => 'eicon-text-align-center',
-                    ],
-                    'right' => [
-                        'title' => __('Right', 'ad_icon_box'),
-                        'icon' => 'eicon-text-align-right',
-                    ],
-                ],
-                'default' => 'left',
-                'toggle' => true,
-                'condition' => [
-                    'show_button' => 'yes',
-                ],
-            ]
-        );
-
 
         $this->end_controls_section();
 
@@ -553,6 +526,215 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
             ]
         );
 
+        $this->add_control(
+            'container_height',
+            [
+                'label' => __('Height', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', 'vh',],
+                'range' => [
+                    'px' => [
+                        'min' => 50,
+                        'max' => 1000,
+                    ],
+                    'em' => [
+                        'min' => 1,
+                        'max' => 50,
+                    ],
+                    'vh' => [
+                        'min' => 10,
+                        'max' => 100,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box' => 'height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+        $this->add_control(
+            'container_max_height',
+            [
+                'label' => __('Max Height', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', 'vh',],
+                'range' => [
+                    'px' => [
+                        'min' => 100,
+                        'max' => 2000,
+                    ],
+                    'em' => [
+                        'min' => 1,
+                        'max' => 100,
+                    ],
+                    'vh' => [
+                        'min' => 10,
+                        'max' => 100,
+                    ],
+
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box' => 'max-height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+
+        $this->end_controls_section();
+
+        /************************************************ Content Style ***********************************************************************/
+
+        $this->start_controls_section(
+            'style_section_content_title',
+            [
+                'label' => __('Content Style', 'ad_icon_box'),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+        // Title Controls
+        $this->add_control(
+            'content_title_heading',
+            [
+                'label' => __('Title', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::HEADING,
+            ]
+        );
+
+        $this->start_controls_tabs('title_color_tabs');
+
+        // Normal Tab
+        $this->start_controls_tab(
+            'content_title_normal_tab',
+            [
+                'label' => __('Normal', 'ad_icon_box'),
+            ]
+        );
+
+        $this->add_control(
+            'content_title_color',
+            [
+                'label' => __('Color', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box_title' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        // Hover Tab
+        $this->start_controls_tab(
+            'content_title_hover_tab',
+            [
+                'label' => __('Hover', 'ad_icon_box'),
+            ]
+        );
+
+        $this->add_control(
+            'content_title_hover_color',
+            [
+                'label' => __('Hover Color', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_title' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+
+//        Title  Typography Control
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'content_title_typography',
+                'label' => __('Typography', 'ad_icon_box'),
+                'selector' => '{{WRAPPER}} .advance_icon_box_title',
+            ]
+        );
+
+        // Description Controls
+        $this->add_control(
+            'content_description_heading',
+            [
+                'label' => __('Description', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::HEADING,
+            ]
+        );
+
+        $this->start_controls_tabs('description_color_tabs');
+
+        // Icon Box Normal Tab
+        $this->start_controls_tab(
+            'content_description_normal_tab',
+            [
+                'label' => __('Normal', 'ad_icon_box'),
+            ]
+        );
+
+        $this->add_control(
+            'content_description_color',
+            [
+                'label' => __('Color', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box_description' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        // Icon Box Hover Tab
+        $this->start_controls_tab(
+            'content_description_hover_tab',
+            [
+                'label' => __('Hover', 'ad_icon_box'),
+            ]
+        );
+
+        $this->add_control(
+            'content_description_hover_color',
+            [
+                'label' => __('Hover Color', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_description ' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+
+//        Description  Typography Control
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'description_typography',
+                'label' => __('Typography', 'ad_icon_box'),
+                'selector' => '{{WRAPPER}} .advance_icon_box_description',
+            ]
+        );
+
+        // Padding control
+        $this->add_responsive_control(
+            'content_padding',
+            [
+                'label' => __('Padding', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box_description' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
 
         $this->end_controls_section();
 
@@ -563,7 +745,7 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
         $this->start_controls_section(
             'button_icon_style_section',
             [
-                'label' => __('Button Icon Style', 'ad_icon_box'),
+                'label' => __('Button Style', 'ad_icon_box'),
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'show_button' => 'yes', // Only show this section if the button is visible
@@ -595,17 +777,30 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
             ]
         );
 
+        // Add margin Control
+        $this->add_responsive_control(
+            'button_margin',
+            [
+                'label' => __('Button Margin', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .button-wrapper' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
         // Add Padding Control
         $this->add_responsive_control(
-            'button_icon_padding',
+            'button_padding',
             [
-                'label' => __('Icon Padding', 'ad_icon_box'),
+                'label' => __('Button Padding', 'ad_icon_box'),
                 'type' => \Elementor\Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%', 'em'],
                 'default' => [
                     'top' => 8,
                     'right' => 32,
-                    'bottom' => 8,
+                    'bottom' => 11,
                     'left' => 32,
                     'unit' => 'px',
                 ],
@@ -628,6 +823,32 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 ],
                 'selectors' => [
                     '{{WRAPPER}} .button-wrapper' => 'display: {{VALUE}};',
+                ],
+            ]
+        );
+        $this->add_control(
+            'button_alignment',
+            [
+                'label' => __('Button Alignment', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => __('Left', 'ad_icon_box'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'ad_icon_box'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => __('Right', 'ad_icon_box'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'default' => 'left',
+                'toggle' => true,
+                'condition' => [
+                    'show_button' => 'yes',
                 ],
             ]
         );
@@ -795,195 +1016,6 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
 
         $this->end_controls_section();
 
-        /************************************************ Content Style ***********************************************************************/
-
-        $this->start_controls_section(
-            'style_section_content_title',
-            [
-                'label' => __('Content Style', 'ad_icon_box'),
-                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-            ]
-        );
-        // Title Controls
-        $this->add_control(
-            'content_title_heading',
-            [
-                'label' => __('Title', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::HEADING,
-            ]
-        );
-
-        $this->start_controls_tabs('title_color_tabs');
-
-        // Normal Tab
-        $this->start_controls_tab(
-            'content_title_normal_tab',
-            [
-                'label' => __('Normal', 'ad_icon_box'),
-            ]
-        );
-
-        $this->add_control(
-            'content_title_color',
-            [
-                'label' => __('Color', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box_title' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-// Hover Tab
-        $this->start_controls_tab(
-            'content_title_hover_tab',
-            [
-                'label' => __('Hover', 'ad_icon_box'),
-            ]
-        );
-
-        $this->add_control(
-            'content_title_hover_color',
-            [
-                'label' => __('Hover Color', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_title' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Typography::get_type(),
-            [
-                'name' => 'content_title_typography',
-                'label' => __('Typography', 'ad_icon_box'),
-                'selector' => '{{WRAPPER}} .advance_icon_box_title',
-            ]
-        );
-//        $this->add_control(
-//            'content_title_alignment',
-//            [
-//                'label' => __('Alignment', 'ad_icon_box'),
-//                'type' => \Elementor\Controls_Manager::CHOOSE,
-//                'options' => [
-//                    'left' => [
-//                        'title' => __('Left', 'ad_icon_box'),
-//                        'icon' => 'eicon-text-align-left',
-//                    ],
-//                    'center' => [
-//                        'title' => __('Center', 'ad_icon_box'),
-//                        'icon' => 'eicon-text-align-center',
-//                    ],
-//                    'right' => [
-//                        'title' => __('Right', 'ad_icon_box'),
-//                        'icon' => 'eicon-text-align-right',
-//                    ],
-//                ],
-//                'selectors' => [
-//                    '{{WRAPPER}} .advance_icon_box_title' => 'text-align: {{VALUE}};',
-//                ],
-//            ]
-//        );
-
-        // Description Controls
-        $this->add_control(
-            'content_description_heading',
-            [
-                'label' => __('Description', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::HEADING,
-            ]
-        );
-
-        $this->start_controls_tabs('description_color_tabs');
-
-        // Icon Box Normal Tab
-        $this->start_controls_tab(
-            'content_description_normal_tab',
-            [
-                'label' => __('Normal', 'ad_icon_box'),
-            ]
-        );
-
-        $this->add_control(
-            'content_description_color',
-            [
-                'label' => __('Color', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box_description' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        // Icon Box Hover Tab
-        $this->start_controls_tab(
-            'content_description_hover_tab',
-            [
-                'label' => __('Hover', 'ad_icon_box'),
-            ]
-        );
-
-        $this->add_control(
-            'content_description_hover_color',
-            [
-                'label' => __('Hover Color', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_description ' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Typography::get_type(),
-            [
-                'name' => 'description_typography',
-                'label' => __('Typography', 'ad_icon_box'),
-                'selector' => '{{WRAPPER}} .advance_icon_box_description',
-            ]
-        );
-
-//        $this->add_control(
-//            'description_alignment',
-//            [
-//                'label' => __('Alignment', 'ad_icon_box'),
-//                'type' => \Elementor\Controls_Manager::CHOOSE,
-//                'options' => [
-//                    'left' => [
-//                        'title' => __('Left', 'ad_icon_box'),
-//                        'icon' => 'eicon-text-align-left',
-//                    ],
-//                    'center' => [
-//                        'title' => __('Center', 'ad_icon_box'),
-//                        'icon' => 'eicon-text-align-center',
-//                    ],
-//                    'right' => [
-//                        'title' => __('Right', 'ad_icon_box'),
-//                        'icon' => 'eicon-text-align-right',
-//                    ],
-//                ],
-//                'selectors' => [
-//                    '{{WRAPPER}} .advance_icon_box_description' => 'text-align: {{VALUE}};',
-//                ],
-//            ]
-//        );
-
-
-        $this->end_controls_section();
 
         /**************************************************************************************** Icon Style **************************************************************************************************/
 
@@ -997,15 +1029,8 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 ]
             ]
         );
-        $this->start_controls_tabs('icon_box_tabs');
 
-        // Normal Tab
-        $this->start_controls_tab(
-            'icon_box_normal_tab',
-            [
-                'label' => __('Normal', 'ad_icon_box'),
-            ]
-        );
+        // Controls for Icon
         $this->add_control(
             'icon_size_media',
             [
@@ -1028,14 +1053,149 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                         'step' => 0.1,
                     ],
                 ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 50,
+                ],
                 'selectors' => [
                     '{{WRAPPER}} .advance_icon_box_media i' => 'font-size: {{SIZE}}{{UNIT}};',
                     '{{WRAPPER}} .advance_icon_box_media svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};', // For SVG icons
-                    '{{WRAPPER}} .advance_icon_box_media img' => 'width: {{SIZE}}{{UNIT}};', // For image icons
+                ],
+                'condition' => [
+                    'icon_type' => 'icon',
+                ],
+            ]
+        );
+        // Controls for Image
+        $this->add_control(
+            'icon_box_image_width',
+            [
+                'label' => __('Image Width', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'em'],
+                'range' => [
+                    'px' => [
+                        'min' => 10,
+                        'max' => 1000,
+                        'step' => 1,
+                    ],
+                    '%' => [
+                        'min' => 10,
+                        'max' => 100,
+                    ],
+                ],
+                'default' => [
+                    'unit' => '%',
+                    'size' => 100,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box_media img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'icon_type' => 'image',
                 ],
             ]
         );
 
+        $this->add_control(
+            'icon_box_image_height',
+            [
+                'label' => __('Image Height', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'em'],
+                'range' => [
+                    'px' => [
+                        'min' => 10,
+                        'max' => 1000,
+                        'step' => 1,
+                    ],
+                    '%' => [
+                        'min' => 10,
+                        'max' => 100,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box_media img' => 'height: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'icon_type' => 'image',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'icon_box_image_max_width',
+            [
+                'label' => __('Max Width', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'em'],
+                'range' => [
+                    'px' => [
+                        'min' => 10,
+                        'max' => 1000,
+                    ],
+                    '%' => [
+                        'min' => 10,
+                        'max' => 100,
+                    ],
+                ],
+                'selectors' => [
+//                    '{{WRAPPER}} .advance_icon_box_media img' => 'max-width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .advance_icon_box_media' => 'max-width: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'icon_type' => 'image',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'icon_box_image_min_width',
+            [
+                'label' => __('Min Width', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'em'],
+                'range' => [
+                    'px' => [
+                        'min' => 10,
+                        'max' => 1000,
+                    ],
+                    '%' => [
+                        'min' => 10,
+                        'max' => 100,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box_media img' => 'min-width: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'icon_type' => 'image',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'icon_box_image_object_fit',
+            [
+                'label' => __('Object Fit', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'cover',
+                'options' => [
+                    'fill' => __('Fill', 'ad_icon_box'),
+                    'contain' => __('Contain', 'ad_icon_box'),
+                    'cover' => __('Cover', 'ad_icon_box'),
+                    'none' => __('None', 'ad_icon_box'),
+                    'scale-down' => __('Scale Down', 'ad_icon_box'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box_media img' => 'object-fit: {{VALUE}};',
+                ],
+                'condition' => [
+                    'icon_type' => 'image',
+                ],
+            ]
+        );
+//        //        Icon Control Alignment
 //        $this->add_control(
 //            'box_icon_alignment',
 //            [
@@ -1059,8 +1219,51 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
 //                'selectors' => [
 //                    '{{WRAPPER}} .advance_icon_box_media' => 'text-align: {{VALUE}};',
 //                ],
+//                'condition' => [
+//                    'icon_type' => 'icon',
+//                ],
 //            ]
 //        );
+//
+//        //        Image Control Alignment
+//        $this->add_control(
+//            'box_icon_image_alignment',
+//            [
+//                'label' => __('Icon Alignment', 'ad_icon_box'),
+//                'type' => \Elementor\Controls_Manager::CHOOSE,
+//                'options' => [
+//                    'left' => [
+//                        'title' => __('Left', 'ad_icon_box'),
+//                        'icon' => 'eicon-text-align-left',
+//                    ],
+//                    'center' => [
+//                        'title' => __('Center', 'ad_icon_box'),
+//                        'icon' => 'eicon-text-align-center',
+//                    ],
+//                    'right' => [
+//                        'title' => __('Right', 'ad_icon_box'),
+//                        'icon' => 'eicon-text-align-right',
+//                    ],
+//                ],
+//                'toggle' => true,
+//                'selectors' => [
+//                    '{{WRAPPER}} .advance_icon_box_media img' => 'text-align: {{VALUE}};',
+//                ],
+//                'condition' => [
+//                    'icon_type' => 'image',
+//                ],
+//            ]
+//        );
+
+        $this->start_controls_tabs('icon_box_tabs');
+
+        // Normal Tab
+        $this->start_controls_tab(
+            'icon_box_normal_tab',
+            [
+                'label' => __('Normal', 'ad_icon_box'),
+            ]
+        );
 
         // Padding control
         $this->add_responsive_control(
@@ -1083,7 +1286,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'type' => \Elementor\Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%', 'em'],
                 'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box_media' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .advance_icon_box_media img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .advance_icon_box_media i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .advance_icon_box_media svg' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -1207,58 +1412,136 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'label' => __('Hover', 'ad_icon_box'),
             ]
         );
-        $this->add_control(
-            'icon_size_hover_media',
-            [
-                'label' => __('Icon Size', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px', '%', 'em'],
-                'range' => [
-                    'px' => [
-                        'min' => 10,
-                        'max' => 200,
-                        'step' => 1,
-                    ],
-                    '%' => [
-                        'min' => 10,
-                        'max' => 100,
-                    ],
-                    'em' => [
-                        'min' => 1,
-                        'max' => 10,
-                        'step' => 0.1,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media i' => 'font-size: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};', // For SVG icons
-                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media img' => 'width: {{SIZE}}{{UNIT}};', // For image icons
-                ],
-            ]
-        );
 
+        // Controls for Icon
 //        $this->add_control(
-//            'box_icon_hover_alignment',
+//            'icon_size_hover_media',
 //            [
-//                'label' => __('Icon Alignment', 'ad_icon_box'),
-//                'type' => \Elementor\Controls_Manager::CHOOSE,
-//                'options' => [
-//                    'left' => [
-//                        'title' => __('Left', 'ad_icon_box'),
-//                        'icon' => 'eicon-text-align-left',
+//                'label' => __('Icon Size', 'ad_icon_box'),
+//                'type' => \Elementor\Controls_Manager::SLIDER,
+//                'size_units' => ['px', '%', 'em'],
+//                'range' => [
+//                    'px' => [
+//                        'min' => 10,
+//                        'max' => 200,
+//                        'step' => 1,
 //                    ],
-//                    'center' => [
-//                        'title' => __('Center', 'ad_icon_box'),
-//                        'icon' => 'eicon-text-align-center',
+//                    '%' => [
+//                        'min' => 10,
+//                        'max' => 100,
 //                    ],
-//                    'right' => [
-//                        'title' => __('Right', 'ad_icon_box'),
-//                        'icon' => 'eicon-text-align-right',
+//                    'em' => [
+//                        'min' => 1,
+//                        'max' => 10,
+//                        'step' => 0.1,
 //                    ],
 //                ],
-//                'toggle' => true,
 //                'selectors' => [
-//                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media' => 'text-align: {{VALUE}};',
+//                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media i' => 'font-size: {{SIZE}}{{UNIT}};',
+//                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};', // For SVG icons
+//                ],
+//                'condition' => [
+//                    'icon_type' => 'icon',
+//                ],
+//            ]
+//        );
+//
+//        // Controls for Image
+//        $this->add_control(
+//            'icon_box_hover_image_width',
+//            [
+//                'label' => __('Image Width', 'ad_icon_box'),
+//                'type' => \Elementor\Controls_Manager::SLIDER,
+//                'size_units' => ['px', '%', 'em'],
+//                'range' => [
+//                    'px' => [
+//                        'min' => 10,
+//                        'max' => 1000,
+//                        'step' => 1,
+//                    ],
+//                    '%' => [
+//                        'min' => 10,
+//                        'max' => 100,
+//                    ],
+//                ],
+//                'selectors' => [
+//                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media img' => 'width: {{SIZE}}{{UNIT}};',
+//                ],
+//                'condition' => [
+//                    'icon_type' => 'image',
+//                ],
+//            ]
+//        );
+//
+//        $this->add_control(
+//            'icon_box_hover_image_height',
+//            [
+//                'label' => __('Image Height', 'ad_icon_box'),
+//                'type' => \Elementor\Controls_Manager::SLIDER,
+//                'size_units' => ['px', '%', 'em'],
+//                'range' => [
+//                    'px' => [
+//                        'min' => 10,
+//                        'max' => 1000,
+//                        'step' => 1,
+//                    ],
+//                    '%' => [
+//                        'min' => 10,
+//                        'max' => 100,
+//                    ],
+//                ],
+//                'selectors' => [
+//                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media img' => 'height: {{SIZE}}{{UNIT}};',
+//                ],
+//                'condition' => [
+//                    'icon_type' => 'image',
+//                ],
+//            ]
+//        );
+//
+//        $this->add_control(
+//            'icon_box_hover_image_max_width',
+//            [
+//                'label' => __('Max Width', 'ad_icon_box'),
+//                'type' => \Elementor\Controls_Manager::SLIDER,
+//                'size_units' => ['px', '%', 'em'],
+//                'range' => [
+//                    'px' => [
+//                        'min' => 10,
+//                        'max' => 1000,
+//                    ],
+//                    '%' => [
+//                        'min' => 10,
+//                        'max' => 100,
+//                    ],
+//                ],
+//                'selectors' => [
+//                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media img' => 'max-width: {{SIZE}}{{UNIT}};',
+//                ],
+//                'condition' => [
+//                    'icon_type' => 'image',
+//                ],
+//            ]
+//        );
+//
+//        $this->add_control(
+//            'icon_box_hover_image_object_fit',
+//            [
+//                'label' => __('Object Fit', 'ad_icon_box'),
+//                'type' => \Elementor\Controls_Manager::SELECT,
+//                'default' => 'cover',
+//                'options' => [
+//                    'fill' => __('Fill', 'ad_icon_box'),
+//                    'contain' => __('Contain', 'ad_icon_box'),
+//                    'cover' => __('Cover', 'ad_icon_box'),
+//                    'none' => __('None', 'ad_icon_box'),
+//                    'scale-down' => __('Scale Down', 'ad_icon_box'),
+//                ],
+//                'selectors' => [
+//                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media img' => 'object-fit: {{VALUE}};',
+//                ],
+//                'condition' => [
+//                    'icon_type' => 'image',
 //                ],
 //            ]
 //        );
@@ -1284,7 +1567,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'type' => \Elementor\Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%', 'em'],
                 'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media svg' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -1898,7 +2183,8 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
     }
 
 
-    protected function content_template() {
+    protected function content_template_temp()
+    {
         ?>
         <#
         var settings = settings || {};
@@ -1945,18 +2231,23 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                     <img src="{{ imageUrl }}" alt="{{ settings.icon_image_alt || '<?php esc_attr_e('Icon Image', 'ad_icon_box'); ?>' }}">
                     <# } #>
                 </div>
+
+
                 <div class="advance_icon_box_content">
                     <#
                     var tag = settings.title_tag || 'h3';
                     #>
-                    <{{ tag }} {{{ view.getRenderAttributeString('title') }}}>{{{ settings.title }}}</{{ tag }}>
+                    <{{ tag }} {{{ view.getRenderAttributeString('title') }}}>{{{ settings.title }}}
+                </
+                {{ tag }}>
                 <p {{{ view.getRenderAttributeString('description') }}}>{{{ settings.description }}}</p>
 
                 <# if (settings.show_button === 'yes') {
                 var buttonText = settings.button_text || '<?php esc_html_e('Click Me', 'ad_icon_box'); ?>';
                 var buttonUrl = settings.button_url && settings.button_url.url ? settings.button_url.url : '#';
                 var buttonAlignment = settings.button_alignment || 'left';
-                var buttonIconHTML = elementor.helpers.renderIcon(view, settings.button_icon, { 'aria-hidden': true }, 'i', 'object');
+                var buttonIconHTML = elementor.helpers.renderIcon(view, settings.button_icon, { 'aria-hidden': true },
+                'i', 'object');
                 #>
                 <div class="button-wrapper" style="text-align: {{ buttonAlignment }};">
                     <a href="{{ buttonUrl }}" class="advance-icon-button">
@@ -1982,7 +2273,8 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 <# } #>
             </div>
             <# if (settings.show_badge === 'yes') { #>
-            <div class="badge badge-{{ settings.badge_position }}" {{{ badgeStyles }}}>{{{ settings.badge_title }}}</div>
+            <div class="badge badge-{{ settings.badge_position }}" {{{ badgeStyles }}}>{{{ settings.badge_title }}}
+            </div>
             <# } #>
             </div>
 
