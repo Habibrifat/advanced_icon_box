@@ -30,6 +30,11 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
 //    public function get_keywords() {
 //        return [ 'hello', 'world' ];
 //    }
+    public function get_script_depends() {
+        return ['lottie-player', 'ad-icon-box']; // Add your custom script handle here
+    }
+
+
 
 //register_controls
     protected function register_controls()
@@ -79,78 +84,6 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
             ]
         );
 
-        // button
-        $this->add_control(
-            'show_button',
-            [
-                'label' => __('Show Button', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::SWITCHER,
-                'label_on' => __('Show', 'ad_icon_box'),
-                'label_off' => __('Hide', 'ad_icon_box'),
-                'return_value' => 'yes',
-                'default' => 'no',
-            ]
-        );
-
-        $this->add_control(
-            'button_text',
-            [
-                'label' => __('Button Text', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => __('Click Me', 'ad_icon_box'),
-                'condition' => [
-                    'show_button' => 'yes',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'button_icon',
-            [
-                'label' => __('Button Icon', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::ICONS,
-                'description' => __('Choose an icon to display with the button.', 'ad_icon_box'),
-                'condition' => [
-                    'show_button' => 'yes',
-                ],
-            ]
-        );
-
-
-        $this->add_control(
-            'icon_alignment',
-            [
-                'label' => __('Icon Alignment', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::SELECT,
-                'options' => [
-                    'left' => __('Left', 'ad_icon_box'),
-                    'right' => __('Right', 'ad_icon_box'),
-                    'top' => __('Top', 'ad_icon_box'),
-                    'bottom' => __('Bottom', 'ad_icon_box'),
-                ],
-                'default' => 'left',
-                'condition' => [
-                    'show_button' => 'yes',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'button_url',
-            [
-                'label' => __('Button URL', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::URL,
-                'default' => [
-                    'url' => '#',
-                    'is_external' => false,
-                    'nofollow' => false,
-                ],
-                'condition' => [
-                    'show_button' => 'yes',
-                ],
-            ]
-        );
-
         $this->end_controls_section();
 
 
@@ -179,11 +112,113 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                         'title' => __('Image', 'ad_icon_box'),
                         'icon' => 'eicon-image-bold',
                     ],
+                    'animation' => [
+                        'title' => __('Animation', 'ad_icon_box'),
+                        'icon' => 'eicon-play',
+                    ],
                 ],
                 'default' => 'icon',
-                'toggle' => true, // Allows toggling between options
+                'toggle' => true,
             ]
         );
+
+//        animation
+
+        $this->add_control(
+            'animation_source',
+            [
+                'label' => __('Select JSON File Icon or Link', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'options' => [
+                    'json_file' => __('Select JSON File Icon', 'ad_icon_box'),
+                    'link' => __('Lottie Animation Link', 'ad_icon_box'),
+                ],
+                'default' => 'json_file',
+                'condition' => [
+                    'icon_type' => 'animation',
+                ],
+            ]
+        );
+
+        // Lottie Animation URL (appears only when 'animation_source' is 'link')
+        $this->add_control(
+            'lottie_animation_url',
+            [
+                'label' => __('Lottie Animation URL', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::URL,
+                'placeholder' => __('Enter your Lottie animation URL', 'ad_icon_box'),
+                'condition' => [
+                    'icon_type' => 'animation',
+                    'animation_source' => 'link',
+                ],
+            ]
+        );
+
+        // Lottie Animation File (appears only when 'animation_source' is 'json_file')
+        $this->add_control(
+            'lottie_animation_file',
+            [
+                'label' => __('Upload Lottie JSON File', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::MEDIA,
+                'media_types' => ['application/json'],
+                'condition' => [
+                    'icon_type' => 'animation',
+                    'animation_source' => 'json_file',
+                ],
+            ]
+        );
+
+        // Lottie Loop
+        $this->add_control(
+            'lottie_loop',
+            [
+                'label' => __('Loop Animation', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'ad_icon_box'),
+                'label_off' => __('No', 'ad_icon_box'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+                'condition' => [
+                    'icon_type' => 'animation',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'hover_behavior',
+            [
+                'label' => __( 'Hover Behavior', 'plugin-name' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'options' => [
+                    'none' => __( 'None', 'plugin-name' ),
+                    'play' => __( 'Play', 'plugin-name' ),
+                    'pause' => __( 'Pause', 'plugin-name' ),
+                    'reverse' => __( 'Reverse', 'plugin-name' ),
+                ],
+                'default' => 'none',
+                'condition' => [
+                    'icon_type' => 'animation',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'animation_speed',
+            [
+                'label' => __( 'Animation Speed', 'plugin-name' ),
+                'type' => \Elementor\Controls_Manager::NUMBER,
+                'min' => 0.1,
+                'max' => 5,
+                'step' => 0.1,
+                'default' => 1,
+                'condition' => [
+                    'icon_type' => 'animation',
+                ],
+            ]
+        );
+
+
+//        animation
 
         $this->add_control(
             'icon',
@@ -213,6 +248,8 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 ],
             ]
         );
+
+
         $this->add_control(
             'icon_position',
             [
@@ -739,284 +776,6 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
         $this->end_controls_section();
 
 
-        /******************************************************************** Button Style Control *************************************************************************************/
-
-        // Start New Section
-        $this->start_controls_section(
-            'button_icon_style_section',
-            [
-                'label' => __('Button Style', 'ad_icon_box'),
-                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-                'condition' => [
-                    'show_button' => 'yes', // Only show this section if the button is visible
-                ],
-            ]
-        );
-
-        // Button Icon Size Control
-        $this->add_control(
-            'button_icon_size',
-            [
-                'label' => __('Button Icon Size', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => 5,
-                        'max' => 100,
-                        'step' => 1,
-                    ],
-                ],
-                'default' => [
-                    'unit' => 'px',
-                    'size' => 20,
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .button-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};', // Apply size to both width and height
-                ],
-            ]
-        );
-
-        // Add margin Control
-        $this->add_responsive_control(
-            'button_margin',
-            [
-                'label' => __('Button Margin', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .button-wrapper' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        // Add Padding Control
-        $this->add_responsive_control(
-            'button_padding',
-            [
-                'label' => __('Button Padding', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'default' => [
-                    'top' => 8,
-                    'right' => 32,
-                    'bottom' => 11,
-                    'left' => 32,
-                    'unit' => 'px',
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .button-wrapper .advance-icon-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-        // Button Display Control
-        $this->add_control(
-            'button_display',
-            [
-                'label' => esc_html__('Button Display', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::SELECT,
-                'default' => 'inline-block',
-                'options' => [
-                    'block' => esc_html__('Block', 'ad_icon_box'),
-                    'inline' => esc_html__('Inline', 'ad_icon_box'),
-                    'inline-block' => esc_html__('Inline-Block', 'ad_icon_box'),
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .button-wrapper' => 'display: {{VALUE}};',
-                ],
-            ]
-        );
-        $this->add_control(
-            'button_alignment',
-            [
-                'label' => __('Button Alignment', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::CHOOSE,
-                'options' => [
-                    'left' => [
-                        'title' => __('Left', 'ad_icon_box'),
-                        'icon' => 'eicon-text-align-left',
-                    ],
-                    'center' => [
-                        'title' => __('Center', 'ad_icon_box'),
-                        'icon' => 'eicon-text-align-center',
-                    ],
-                    'right' => [
-                        'title' => __('Right', 'ad_icon_box'),
-                        'icon' => 'eicon-text-align-right',
-                    ],
-                ],
-                'default' => 'left',
-                'toggle' => true,
-                'condition' => [
-                    'show_button' => 'yes',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Typography::get_type(),
-            [
-                'name' => 'button_text_typography',
-                'label' => __('Typography', 'ad_icon_box'),
-                'selector' => '{{WRAPPER}} .button-text',
-            ]
-        );
-
-
-        // Add Icon Color Control with Tabs
-        $this->start_controls_tabs('button_icon_colors_tabs');
-
-        // Normal Tab
-        $this->start_controls_tab(
-            'button_normal_tab',
-            [
-                'label' => __('Normal', 'ad_icon_box'),
-            ]
-        );
-        $this->add_control(
-            'button_background_color',
-            [
-                'label' => __('Button Background Color', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'default' => '#007BFF',
-                'selectors' => [
-                    '{{WRAPPER}} .button-wrapper .advance-icon-button' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-        $this->add_control(
-            'button_text_color',
-            [
-                'label' => __('Button Text Color', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'default' => '#ffffff',
-                'selectors' => [
-                    '{{WRAPPER}} .button-text' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'button_icon_color',
-            [
-                'label' => __('Icon Color', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'default' => '#000000',
-                'selectors' => [
-                    '{{WRAPPER}} .button-icon svg' => 'fill: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Border::get_type(),
-            [
-                'name' => 'button_border',
-                'selector' => '{{WRAPPER}} .button-wrapper .advance-icon-button',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'button_border_radius',
-            [
-                'label' => __('Border Radius', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'default' => [
-                    'top' => 5,
-                    'right' => 5,
-                    'bottom' => 5,
-                    'left' => 5,
-                    'unit' => 'px',
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .button-wrapper .advance-icon-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-        $this->add_group_control(
-            \Elementor\Group_Control_Box_Shadow::get_type(),
-            [
-                'name' => 'button_box_shadow',
-                'selector' => '{{WRAPPER}} .button-wrapper .advance-icon-button',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        // Hover Tab
-        $this->start_controls_tab(
-            'button_hover_tab',
-            [
-                'label' => __('Hover', 'ad_icon_box'),
-            ]
-        );
-        $this->add_control(
-            'button_background_color_hover',
-            [
-                'label' => __('Button Background Color', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'default' => '#000000',
-                'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box:hover .button-wrapper .advance-icon-button' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-        $this->add_control(
-            'button_text_hover_color',
-            [
-                'label' => __('Button Text Hover Color', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box:hover .button-text' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-        $this->add_control(
-            'button_icon_hover_color',
-            [
-                'label' => __('Icon Hover Color', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box:hover .button-icon svg' => 'fill: {{VALUE}};',
-                ],
-            ]
-        );
-        $this->add_group_control(
-            \Elementor\Group_Control_Border::get_type(),
-            [
-                'name' => 'button_border_hover',
-                'selector' => '{{WRAPPER}} .advance_icon_box:hover .button-wrapper .advance-icon-button',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'button_border_radius_hover',
-            [
-                'label' => __('Border Radius', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box:hover .button-wrapper .advance-icon-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-        $this->add_group_control(
-            \Elementor\Group_Control_Box_Shadow::get_type(),
-            [
-                'name' => 'button_box_shadow_hover',
-                'selector' => '{{WRAPPER}} .advance_icon_box:hover .button-wrapper .advance-icon-button',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-
-        $this->end_controls_section();
-
-
         /**************************************************************************************** Icon Style **************************************************************************************************/
 
         $this->start_controls_section(
@@ -1255,13 +1014,65 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
 //            ]
 //        );
 
-        $this->start_controls_tabs('icon_box_tabs');
-
-        // Normal Tab
-        $this->start_controls_tab(
-            'icon_box_normal_tab',
+        // Controls for Animation
+        $this->add_control(
+            'icon_box_animation_width',
             [
-                'label' => __('Normal', 'ad_icon_box'),
+                'label' => __('Animation Width', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'em'],
+                'range' => [
+                    'px' => [
+                        'min' => 10,
+                        'max' => 1000,
+                        'step' => 1,
+                    ],
+                    '%' => [
+                        'min' => 10,
+                        'max' => 100,
+                    ],
+                ],
+                'default' => [
+                    'unit' => '%',
+                    'size' => 100,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box_media .lottie-animation' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'icon_type' => 'animation',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'icon_box_animation_height',
+            [
+                'label' => __('Animation Height', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'em'],
+                'range' => [
+                    'px' => [
+                        'min' => 10,
+                        'max' => 1000,
+                        'step' => 1,
+                    ],
+                    '%' => [
+                        'min' => 10,
+                        'max' => 100,
+                    ],
+
+                ],
+//                'default' => [
+//                    'unit' => '%',
+//                    'size' => 100,
+//                ],
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box_media .lottie-animation' => 'height: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'icon_type' => 'animation',
+                ],
             ]
         );
 
@@ -1293,8 +1104,45 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
             ]
         );
 
+        $this->add_control(
+            'box_icon_spacing',
+            [
+                'label' => __('Icon Spacing', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'em'],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ],
+                    '%' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ],
+                    'em' => [
+                        'min' => 0,
+                        'max' => 10,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box_media i' => 'padding: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .advance_icon_box_media svg' => 'padding: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'icon_type' => 'icon',
+                ],
+            ]
+        );
 
-//        Icon Type Icon
+        $this->start_controls_tabs('icon_box_tabs');
+
+        // Normal Tab
+        $this->start_controls_tab(
+            'icon_box_normal_tab',
+            [
+                'label' => __('Normal', 'ad_icon_box'),
+            ]
+        );
 
         //  Background Color
         $this->add_control(
@@ -1327,38 +1175,6 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 ],
             ]
         );
-
-
-        $this->add_control(
-            'box_icon_spacing',
-            [
-                'label' => __('Icon Spacing', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px', '%', 'em'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                    '%' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                    'em' => [
-                        'min' => 0,
-                        'max' => 10,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box_media i' => 'padding: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .advance_icon_box_media svg' => 'padding: {{SIZE}}{{UNIT}};',
-                ],
-                'condition' => [
-                    'icon_type' => 'icon',
-                ],
-            ]
-        );
-
 
         // Border control
         $this->add_group_control(
@@ -1398,6 +1214,86 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'selector' => '{{WRAPPER}} .advance_icon_box_media i, {{WRAPPER}} .advance_icon_box_media svg',
                 'condition' => [
                     'icon_type' => 'icon',
+                ],
+            ]
+        );
+
+        // image Border control
+        $this->add_group_control(
+            \Elementor\Group_Control_Border::get_type(),
+            [
+                'name' => 'box_icon_image_border',
+                'selector' => '{{WRAPPER}} .advance_icon_box_media img',
+                'condition' => [
+                    'icon_type' => 'image',
+                ],
+            ]
+        );
+
+        // image Border radius control
+        $this->add_responsive_control(
+            'box_icon_image_border_radius',
+            [
+                'label' => __('Border Radius', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box_media img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'icon_type' => 'image',
+                ],
+            ]
+        );
+
+        // image BoxShadow control
+        $this->add_group_control(
+            \Elementor\Group_Control_Box_Shadow::get_type(),
+            [
+                'name' => 'box_icon_image_shadow',
+                'selector' => '{{WRAPPER}} .advance_icon_box_media img',
+                'condition' => [
+                    'icon_type' => 'image',
+                ],
+            ]
+        );
+
+        // Animation Border control
+        $this->add_group_control(
+            \Elementor\Group_Control_Border::get_type(),
+            [
+                'name' => 'box_icon_animation_border',
+                'selector' => '{{WRAPPER}} .advance_icon_box_media .lottie-animation',
+                'condition' => [
+                    'icon_type' => 'animation',
+                ],
+            ]
+        );
+
+        // Animation Border radius control
+        $this->add_responsive_control(
+            'box_icon_animation_border_radius',
+            [
+                'label' => __('Border Radius', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box_media .lottie-animation' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'icon_type' => 'animation',
+                ],
+            ]
+        );
+
+        // Animation BoxShadow control
+        $this->add_group_control(
+            \Elementor\Group_Control_Box_Shadow::get_type(),
+            [
+                'name' => 'box_icon_animation_shadow',
+                'selector' => '{{WRAPPER}} .advance_icon_box_media .lottie-animation',
+                'condition' => [
+                    'icon_type' => 'animation',
                 ],
             ]
         );
@@ -1547,34 +1443,32 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
 //        );
 
         // Padding control
-        $this->add_responsive_control(
-            'box_icon_hover_padding',
-            [
-                'label' => __('Padding', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
+//        $this->add_responsive_control(
+//            'box_icon_hover_padding',
+//            [
+//                'label' => __('Padding', 'ad_icon_box'),
+//                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+//                'size_units' => ['px', '%', 'em'],
+//                'selectors' => [
+//                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+//                ],
+//            ]
+//        );
 
         // Margin control
-        $this->add_responsive_control(
-            'box_icon_hover_margin',
-            [
-                'label' => __('Margin', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media svg' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        //  Icon Type Icon
+//        $this->add_responsive_control(
+//            'box_icon_hover_margin',
+//            [
+//                'label' => __('Margin', 'ad_icon_box'),
+//                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+//                'size_units' => ['px', '%', 'em'],
+//                'selectors' => [
+//                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+//                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+//                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media svg' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+//                ],
+//            ]
+//        );
 
         //  Background Color
         $this->add_control(
@@ -1609,35 +1503,35 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
         );
 
 
-        $this->add_control(
-            'box_icon_hover_spacing',
-            [
-                'label' => __('Icon Spacing', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px', '%', 'em'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                    '%' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                    'em' => [
-                        'min' => 0,
-                        'max' => 10,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media i' => 'padding: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media svg' => 'padding: {{SIZE}}{{UNIT}};',
-                ],
-                'condition' => [
-                    'icon_type' => 'icon',
-                ],
-            ]
-        );
+//        $this->add_control(
+//            'box_icon_hover_spacing',
+//            [
+//                'label' => __('Icon Spacing', 'ad_icon_box'),
+//                'type' => \Elementor\Controls_Manager::SLIDER,
+//                'size_units' => ['px', '%', 'em'],
+//                'range' => [
+//                    'px' => [
+//                        'min' => 0,
+//                        'max' => 100,
+//                    ],
+//                    '%' => [
+//                        'min' => 0,
+//                        'max' => 100,
+//                    ],
+//                    'em' => [
+//                        'min' => 0,
+//                        'max' => 10,
+//                    ],
+//                ],
+//                'selectors' => [
+//                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media i' => 'padding: {{SIZE}}{{UNIT}};',
+//                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media svg' => 'padding: {{SIZE}}{{UNIT}};',
+//                ],
+//                'condition' => [
+//                    'icon_type' => 'icon',
+//                ],
+//            ]
+//        );
 
 
         // Border control
@@ -1682,32 +1576,27 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
             ]
         );
 
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-
-        // Border control
+        // image Border control
         $this->add_group_control(
             \Elementor\Group_Control_Border::get_type(),
             [
-                'name' => 'box_icon_border',
-                'selector' => '{{WRAPPER}} .advance_icon_box_media img',
+                'name' => 'box_icon_image_border_hover',
+                'selector' => '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media img',
                 'condition' => [
                     'icon_type' => 'image',
                 ],
             ]
         );
 
-        // Border radius control
+        // image Border radius control
         $this->add_responsive_control(
-            'box_icon_border_radius',
+            'box_icon_image_border_radius_hover',
             [
                 'label' => __('Border Radius', 'ad_icon_box'),
                 'type' => \Elementor\Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%', 'em'],
                 'selectors' => [
-                    '{{WRAPPER}} .advance_icon_box_media img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
                 'condition' => [
                     'icon_type' => 'image',
@@ -1715,46 +1604,424 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
             ]
         );
 
-        // BoxShadow control
+        // image BoxShadow control
         $this->add_group_control(
             \Elementor\Group_Control_Box_Shadow::get_type(),
             [
-                'name' => 'box_icon_shadow',
-                'selector' => '{{WRAPPER}} .advance_icon_box_media img',
+                'name' => 'box_icon_image_shadow_hover',
+                'selector' => '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media img',
                 'condition' => [
                     'icon_type' => 'image',
                 ],
             ]
         );
+
+        // Animation Border control
+        $this->add_group_control(
+            \Elementor\Group_Control_Border::get_type(),
+            [
+                'name' => 'box_icon_animation_border_hover',
+                'selector' => '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media .lottie-animation',
+                'condition' => [
+                    'icon_type' => 'animation',
+                ],
+            ]
+        );
+
+        // Animation Border radius control
+        $this->add_responsive_control(
+            'box_icon_animation_border_radius_hover',
+            [
+                'label' => __('Border Radius', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media .lottie-animation' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'icon_type' => 'animation',
+                ],
+            ]
+        );
+
+        // Animation BoxShadow control
+        $this->add_group_control(
+            \Elementor\Group_Control_Box_Shadow::get_type(),
+            [
+                'name' => 'box_icon_animation_shadow_hover',
+                'selector' => '{{WRAPPER}} .advance_icon_box:hover .advance_icon_box_media .lottie-animation',
+                'condition' => [
+                    'icon_type' => 'animation',
+                ],
+            ]
+        );
+
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
 
 
         $this->end_controls_section();
 
-        /********************************************************************************************* Container Link *********************************************************************/
+
+        /************************************************************************************* Button Section ******************************************************************************************************/
 
         $this->start_controls_section(
-            'content_section_link',
+            'button_section',
             [
-                'label' => esc_html__('Container Wrapper Link', 'ad_icon_box'),
+                'label' => __('Button', 'ad_icon_box'),
                 'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+            ]
+        );
+        // button
+        $this->add_control(
+            'show_button',
+            [
+                'label' => __('Show Button', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'ad_icon_box'),
+                'label_off' => __('Hide', 'ad_icon_box'),
+                'return_value' => 'yes',
+                'default' => 'no',
             ]
         );
 
         $this->add_control(
-            'container_link',
+            'button_text',
             [
-                'label' => __('Link', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::URL,
-                'placeholder' => __('https://your-link.com', 'ad_icon_box'),
-                'show_external' => true,
-                'default' => [
-                    'url' => '',
+                'label' => __('Button Text', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => __('Click Me', 'ad_icon_box'),
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'button_icon',
+            [
+                'label' => __('Button Icon', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::ICONS,
+                'description' => __('Choose an icon to display with the button.', 'ad_icon_box'),
+                'condition' => [
+                    'show_button' => 'yes',
                 ],
             ]
         );
 
 
+        $this->add_control(
+            'icon_alignment',
+            [
+                'label' => __('Icon Alignment', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'options' => [
+                    'left' => __('Left', 'ad_icon_box'),
+                    'right' => __('Right', 'ad_icon_box'),
+                    'top' => __('Top', 'ad_icon_box'),
+                    'bottom' => __('Bottom', 'ad_icon_box'),
+                ],
+                'default' => 'left',
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'button_url',
+            [
+                'label' => __('Button URL', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::URL,
+                'default' => [
+                    'url' => '#',
+                    'is_external' => false,
+                    'nofollow' => false,
+                ],
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
+            ]
+        );
         $this->end_controls_section();
+
+        /************************************************************************************* Button Style Control ******************************************************************************************************/
+        $this->start_controls_section(
+            'button_icon_style_section',
+            [
+                'label' => __('Button Style', 'ad_icon_box'),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'show_button' => 'yes', // Only show this section if the button is visible
+                ],
+            ]
+        );
+
+        // Button Icon Size Control
+        $this->add_control(
+            'button_icon_size',
+            [
+                'label' => __('Button Icon Size', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', '%'],
+                'range' => [
+                    'px' => [
+                        'min' => 5,
+                        'max' => 100,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 20,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .button-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};', // Apply size to both width and height
+                ],
+            ]
+        );
+
+        // Add margin Control
+        $this->add_responsive_control(
+            'button_margin',
+            [
+                'label' => __('Button Margin', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .button-wrapper' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        // Add Padding Control
+        $this->add_responsive_control(
+            'button_padding',
+            [
+                'label' => __('Button Padding', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 8,
+                    'right' => 32,
+                    'bottom' => 11,
+                    'left' => 32,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .button-wrapper .advance-icon-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+        // Button Display Control
+        $this->add_control(
+            'button_display',
+            [
+                'label' => esc_html__('Button Display', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'inline-block',
+                'options' => [
+                    'block' => esc_html__('Block', 'ad_icon_box'),
+                    'inline' => esc_html__('Inline', 'ad_icon_box'),
+                    'inline-block' => esc_html__('Inline-Block', 'ad_icon_box'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .button-wrapper' => 'display: {{VALUE}};',
+                ],
+            ]
+        );
+        $this->add_control(
+            'button_alignment',
+            [
+                'label' => __('Button Alignment', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => __('Left', 'ad_icon_box'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'ad_icon_box'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => __('Right', 'ad_icon_box'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'default' => 'left',
+                'toggle' => true,
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'button_text_typography',
+                'label' => __('Typography', 'ad_icon_box'),
+                'selector' => '{{WRAPPER}} .button-text',
+            ]
+        );
+
+
+        // Add Icon Color Control with Tabs
+        $this->start_controls_tabs('button_icon_colors_tabs');
+
+        // Normal Tab
+        $this->start_controls_tab(
+            'button_normal_tab',
+            [
+                'label' => __('Normal', 'ad_icon_box'),
+            ]
+        );
+        $this->add_control(
+            'button_background_color',
+            [
+                'label' => __('Button Background Color', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'default' => '#007BFF',
+                'selectors' => [
+                    '{{WRAPPER}} .button-wrapper .advance-icon-button' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+        $this->add_control(
+            'button_text_color',
+            [
+                'label' => __('Button Text Color', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'default' => '#ffffff',
+                'selectors' => [
+                    '{{WRAPPER}} .button-text' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'button_icon_color',
+            [
+                'label' => __('Icon Color', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'default' => '#000000',
+                'selectors' => [
+                    '{{WRAPPER}} .button-icon svg' => 'fill: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Border::get_type(),
+            [
+                'name' => 'button_border',
+                'selector' => '{{WRAPPER}} .button-wrapper .advance-icon-button',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'button_border_radius',
+            [
+                'label' => __('Border Radius', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default' => [
+                    'top' => 5,
+                    'right' => 5,
+                    'bottom' => 5,
+                    'left' => 5,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .button-wrapper .advance-icon-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+        $this->add_group_control(
+            \Elementor\Group_Control_Box_Shadow::get_type(),
+            [
+                'name' => 'button_box_shadow',
+                'selector' => '{{WRAPPER}} .button-wrapper .advance-icon-button',
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        // Hover Tab
+        $this->start_controls_tab(
+            'button_hover_tab',
+            [
+                'label' => __('Hover', 'ad_icon_box'),
+            ]
+        );
+        $this->add_control(
+            'button_background_color_hover',
+            [
+                'label' => __('Button Background Color', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'default' => '#007bff94',
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box:hover .button-wrapper .advance-icon-button' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+        $this->add_control(
+            'button_text_hover_color',
+            [
+                'label' => __('Button Text Hover Color', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box:hover .button-text' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+        $this->add_control(
+            'button_icon_hover_color',
+            [
+                'label' => __('Icon Hover Color', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box:hover .button-icon svg' => 'fill: {{VALUE}};',
+                ],
+            ]
+        );
+        $this->add_group_control(
+            \Elementor\Group_Control_Border::get_type(),
+            [
+                'name' => 'button_border_hover',
+                'selector' => '{{WRAPPER}} .advance_icon_box:hover .button-wrapper .advance-icon-button',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'button_border_radius_hover',
+            [
+                'label' => __('Border Radius', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .advance_icon_box:hover .button-wrapper .advance-icon-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+        $this->add_group_control(
+            \Elementor\Group_Control_Box_Shadow::get_type(),
+            [
+                'name' => 'button_box_shadow_hover',
+                'selector' => '{{WRAPPER}} .advance_icon_box:hover .button-wrapper .advance-icon-button',
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+
+
+        $this->end_controls_section();
+
 
         /************************************************************************************* Badge Section ******************************************************************************************************/
         $this->start_controls_section(
@@ -1926,7 +2193,7 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
             [
                 'label' => __('Background Color', 'ad_icon_box'),
                 'type' => \Elementor\Controls_Manager::COLOR,
-                'default' => '#ff0000',
+                'default' => '#007BFF',
                 'selectors' => [
                     '{{WRAPPER}} .badge' => 'background-color: {{VALUE}};',
                 ],
@@ -1959,13 +2226,13 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'label' => __('Border Radius', 'ad_icon_box'),
                 'type' => \Elementor\Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%', 'em'],
-                'default' => [
-                    'top' => 5,
-                    'right' => 5,
-                    'bottom' => 5,
-                    'left' => 5,
-                    'unit' => 'px',
-                ],
+//                'default' => [
+//                    'top' => 5,
+//                    'right' => 5,
+//                    'bottom' => 5,
+//                    'left' => 5,
+//                    'unit' => 'px',
+//                ],
                 'selectors' => [
                     '{{WRAPPER}} .badge' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
@@ -2042,6 +2309,34 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
 
         $this->end_controls_section();
 
+        /********************************************************************************************* Container Link *********************************************************************/
+
+//        $this->start_controls_section(
+//            'content_section_link',
+//            [
+//                'label' => esc_html__('Container Wrapper Link', 'ad_icon_box'),
+//                'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+//            ]
+//        );
+//
+//        $this->add_control(
+//            'container_link',
+//            [
+//                'label' => __('Link', 'ad_icon_box'),
+//                'type' => \Elementor\Controls_Manager::URL,
+//                'placeholder' => __('https://your-link.com', 'ad_icon_box'),
+//                'show_external' => true,
+//                'default' => [
+//                    'url' => '',
+//                ],
+//            ]
+//        );
+//
+//
+//        $this->end_controls_section();
+
+        /********************************************************************************************************** End Controls ********************************************************************************/
+
 
     }
 
@@ -2079,10 +2374,10 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
         $tag = !empty($settings['title_tag']) ? $settings['title_tag'] : 'h3';
 
 //      Container link
-        $container_link = !empty($settings['container_link']['url']) ? $settings['container_link']['url'] : '';
-        if ($container_link) {
-            echo '<a href="' . esc_url($container_link) . '" class="advance_icon_box_link">';
-        }
+//        $container_link = !empty($settings['container_link']['url']) ? $settings['container_link']['url'] : '';
+//        if ($container_link) {
+//            echo '<a href="' . esc_url($container_link) . '" class="advance_icon_box_link">';
+//        }
 
         ?>
         <div <?php echo $this->get_render_attribute_string('advance_icon_box_hover_animation'); ?> >
@@ -2096,7 +2391,43 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                         : \Elementor\Utils::get_placeholder_image_src();
 
                     echo '<img src="' . esc_url($image_url) . '" alt="' . esc_attr__('Icon Image', 'ad_icon_box') . '">';
+                }// Render Lottie Animation
+                elseif ('animation' === $settings['icon_type']) {
+                    $lottie_json_url = '';
+
+                    // Check animation source
+                    if ('json_file' === $settings['animation_source'] && !empty($settings['lottie_animation_file']['url'])) {
+                        $lottie_json_url = esc_url($settings['lottie_animation_file']['url']);
+                    } elseif ('link' === $settings['animation_source'] && !empty($settings['lottie_animation_url']['url'])) {
+                        $lottie_json_url = esc_url($settings['lottie_animation_url']['url']);
+                    }
+
+                    // Render Lottie animation if URL is available
+//                    if (!empty($lottie_json_url)) {
+//                        // Set loop value based on the settings
+//                        $loop = !empty($settings['lottie_loop']) && 'yes' === $settings['lottie_loop'] ? true : false;
+//
+////                        echo '<div class="lottie-animation" data-lottie-url="' . $lottie_json_url . '" data-lottie-loop="' . $loop . '"></div>';
+//                        // Output the div with data attributes
+//                        echo '<div class="lottie-animation" data-lottie-url="' . esc_url($lottie_json_url) . '" data-lottie-loop="' . ($loop ? 'true' : 'false') . '"></div>';
+//                    }
+                    // Render Lottie animation if URL is available
+                    if (!empty($lottie_json_url)) {
+//                        $loop = !empty($settings['lottie_loop']) && 'yes' === $settings['lottie_loop'] ? 'true' : 'false';
+                        $loop = !empty($settings['lottie_loop']) && 'yes' === $settings['lottie_loop'] ? 'true' : 'false';
+                        $hover_behavior = !empty($settings['hover_behavior']) ? $settings['hover_behavior'] : 'none';
+                        $speed = !empty($settings['animation_speed']) ? $settings['animation_speed'] : 1; // Default speed is 1
+
+                        echo '<div class="lottie-animation" 
+                            data-lottie-url="' . esc_url($lottie_json_url) . '" 
+                            data-lottie-loop="' . esc_attr($loop) . '"  
+                            data-hover-behavior="' . esc_attr($hover_behavior) . '" 
+                            data-animation-speed="' . esc_attr($speed) . '"></div>';
+                    }
+
                 }
+
+
                 ?>
             </div>
             <div class="advance_icon_box_content">
@@ -2175,10 +2506,10 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
         </div>
 
         <?php
-        // Close the link tag if it was opened
-        if ($container_link) {
-            echo '</a>';
-        }
+//        // Close the link tag if it was opened
+//        if ($container_link) {
+//            echo '</a>';
+//        }
 
     }
 

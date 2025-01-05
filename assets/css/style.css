@@ -18,6 +18,11 @@
     font-size:17px;
 }
 
+.advance-icon-button {
+    display: inline-block;
+    width: 100%;
+}
+
 
 /*Hover*/
 
