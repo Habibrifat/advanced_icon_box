@@ -30,10 +30,10 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
 //    public function get_keywords() {
 //        return [ 'hello', 'world' ];
 //    }
-    public function get_script_depends() {
+    public function get_script_depends()
+    {
         return ['lottie-player', 'ad-icon-box']; // Add your custom script handle here
     }
-
 
 
 //register_controls
@@ -187,13 +187,13 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
         $this->add_control(
             'hover_behavior',
             [
-                'label' => __( 'Hover Behavior', 'plugin-name' ),
+                'label' => __('Hover Behavior', 'plugin-name'),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'options' => [
-                    'none' => __( 'None', 'plugin-name' ),
-                    'play' => __( 'Play', 'plugin-name' ),
-                    'pause' => __( 'Pause', 'plugin-name' ),
-                    'reverse' => __( 'Reverse', 'plugin-name' ),
+                    'none' => __('None', 'plugin-name'),
+                    'play' => __('Play', 'plugin-name'),
+                    'pause' => __('Pause', 'plugin-name'),
+                    'reverse' => __('Reverse', 'plugin-name'),
                 ],
                 'default' => 'none',
                 'condition' => [
@@ -205,7 +205,7 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
         $this->add_control(
             'animation_speed',
             [
-                'label' => __( 'Animation Speed', 'plugin-name' ),
+                'label' => __('Animation Speed', 'plugin-name'),
                 'type' => \Elementor\Controls_Manager::NUMBER,
                 'min' => 0.1,
                 'max' => 5,
@@ -1754,31 +1754,7 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'label' => __('Button Style', 'ad_icon_box'),
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                 'condition' => [
-                    'show_button' => 'yes', // Only show this section if the button is visible
-                ],
-            ]
-        );
-
-        // Button Icon Size Control
-        $this->add_control(
-            'button_icon_size',
-            [
-                'label' => __('Button Icon Size', 'ad_icon_box'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => 5,
-                        'max' => 100,
-                        'step' => 1,
-                    ],
-                ],
-                'default' => [
-                    'unit' => 'px',
-                    'size' => 20,
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .button-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};', // Apply size to both width and height
+                    'show_button' => 'yes',
                 ],
             ]
         );
@@ -1792,6 +1768,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'size_units' => ['px', '%', 'em'],
                 'selectors' => [
                     '{{WRAPPER}} .button-wrapper' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'show_button' => 'yes',
                 ],
             ]
         );
@@ -1813,6 +1792,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'selectors' => [
                     '{{WRAPPER}} .button-wrapper .advance-icon-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
         // Button Display Control
@@ -1830,8 +1812,12 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'selectors' => [
                     '{{WRAPPER}} .button-wrapper' => 'display: {{VALUE}};',
                 ],
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
+
         $this->add_control(
             'button_alignment',
             [
@@ -1859,12 +1845,57 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
             ]
         );
 
+        // Button Icon Size Control
+        $this->add_control(
+            'button_icon_size',
+            [
+                'label' => __('Button Icon Size', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', '%'],
+                'range' => [
+                    'px' => [
+                        'min' => 5,
+                        'max' => 100,
+                        'step' => 1,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 14,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .button-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};', // Apply size to both width and height
+                ],
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
+            ]
+        );
+        $this->add_responsive_control(
+            'button_icon_margin',
+            [
+                'label' => __('Button Icon Margin', 'ad_icon_box'),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .button-icon i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .button-icon svg' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
+            ]
+        );
+
         $this->add_group_control(
             \Elementor\Group_Control_Typography::get_type(),
             [
                 'name' => 'button_text_typography',
                 'label' => __('Typography', 'ad_icon_box'),
                 'selector' => '{{WRAPPER}} .button-text',
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
 
@@ -1877,6 +1908,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
             'button_normal_tab',
             [
                 'label' => __('Normal', 'ad_icon_box'),
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
         $this->add_control(
@@ -1888,6 +1922,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'selectors' => [
                     '{{WRAPPER}} .button-wrapper .advance-icon-button' => 'background-color: {{VALUE}};',
                 ],
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
         $this->add_control(
@@ -1898,6 +1935,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'default' => '#ffffff',
                 'selectors' => [
                     '{{WRAPPER}} .button-text' => 'color: {{VALUE}};',
+                ],
+                'condition' => [
+                    'show_button' => 'yes',
                 ],
             ]
         );
@@ -1911,6 +1951,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'selectors' => [
                     '{{WRAPPER}} .button-icon svg' => 'fill: {{VALUE}};',
                 ],
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
 
@@ -1919,6 +1962,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
             [
                 'name' => 'button_border',
                 'selector' => '{{WRAPPER}} .button-wrapper .advance-icon-button',
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
 
@@ -1938,6 +1984,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'selectors' => [
                     '{{WRAPPER}} .button-wrapper .advance-icon-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
         $this->add_group_control(
@@ -1945,6 +1994,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
             [
                 'name' => 'button_box_shadow',
                 'selector' => '{{WRAPPER}} .button-wrapper .advance-icon-button',
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
 
@@ -1955,6 +2007,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
             'button_hover_tab',
             [
                 'label' => __('Hover', 'ad_icon_box'),
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
         $this->add_control(
@@ -1966,6 +2021,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'selectors' => [
                     '{{WRAPPER}} .advance_icon_box:hover .button-wrapper .advance-icon-button' => 'background-color: {{VALUE}};',
                 ],
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
         $this->add_control(
@@ -1975,6 +2033,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .advance_icon_box:hover .button-text' => 'color: {{VALUE}};',
+                ],
+                'condition' => [
+                    'show_button' => 'yes',
                 ],
             ]
         );
@@ -1986,6 +2047,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'selectors' => [
                     '{{WRAPPER}} .advance_icon_box:hover .button-icon svg' => 'fill: {{VALUE}};',
                 ],
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
         $this->add_group_control(
@@ -1993,6 +2057,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
             [
                 'name' => 'button_border_hover',
                 'selector' => '{{WRAPPER}} .advance_icon_box:hover .button-wrapper .advance-icon-button',
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
 
@@ -2005,6 +2072,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 'selectors' => [
                     '{{WRAPPER}} .advance_icon_box:hover .button-wrapper .advance-icon-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
         $this->add_group_control(
@@ -2012,6 +2082,9 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
             [
                 'name' => 'button_box_shadow_hover',
                 'selector' => '{{WRAPPER}} .advance_icon_box:hover .button-wrapper .advance-icon-button',
+                'condition' => [
+                    'show_button' => 'yes',
+                ],
             ]
         );
 
@@ -2552,14 +2625,17 @@ class Advanced_Icon_Box_Widget extends \Elementor\Widget_Base
                 <div class="advance_icon_box_media">
                     <#
                     if (settings.icon_type === 'icon' && settings.icon.value) {
-                    var iconHTML = elementor.helpers.renderIcon(view, settings.icon, { 'aria-hidden': true }, 'i', 'object');
+                    var iconHTML = elementor.helpers.renderIcon(view, settings.icon, { 'aria-hidden': true }, 'i',
+                    'object');
                     if (iconHTML.rendered) {
                     print(iconHTML.value);
                     }
                     } else if (settings.icon_type === 'image') {
-                    var imageUrl = settings.icon_image && settings.icon_image.url ? settings.icon_image.url : Elementor.utils.getPlaceholderImageSrc();
+                    var imageUrl = settings.icon_image && settings.icon_image.url ? settings.icon_image.url :
+                    Elementor.utils.getPlaceholderImageSrc();
                     #>
-                    <img src="{{ imageUrl }}" alt="{{ settings.icon_image_alt || '<?php esc_attr_e('Icon Image', 'ad_icon_box'); ?>' }}">
+                    <img src="{{ imageUrl }}"
+                         alt="{{ settings.icon_image_alt || '<?php esc_attr_e('Icon Image', 'ad_icon_box'); ?>' }}">
                     <# } #>
                 </div>
 
