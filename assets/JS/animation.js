@@ -1,37 +1,8 @@
-console.log("Hello");
-
-// Without $(document).ready
-// (function ($) {
-//     function initializeLottieAnimations($scope) {
-//         $scope.find('.lottie-animation:not(.lottie-initialized)').each(function () {
-//             const lottieUrl = $(this).data('lottie-url');
-//             let loop = $(this).data('lottie-loop'); // This now correctly checks for 'true' string
-//
-//             console.log("loop",loop);
-//
-//             $(this).addClass('lottie-initialized');
-//
-//             lottie.loadAnimation({
-//                 container: this,
-//                 renderer: 'svg',
-//                 loop: loop,
-//                 autoplay: true,
-//                 path: lottieUrl,
-//             });
-//         });
-//     }
-//
-//     $(window).on('elementor/frontend/init', function () {
-//         elementorFrontend.hooks.addAction('frontend/element_ready/advanced_icon_box.default', function ($scope) {
-//             initializeLottieAnimations($scope);
-//         });
-//     });
-// })(jQuery);
 (function ($) {
     function initializeLottieAnimations($scope) {
         $scope.find('.lottie-animation:not(.lottie-initialized)').each(function () {
             const lottieUrl = $(this).data('lottie-url');
-            const loop = $(this).data('lottie-loop'); // Explicitly check for string 'true'
+            const loop = $(this).data('lottie-loop');
             const hoverBehavior = $(this).data('hover-behavior'); // 'none', 'play', 'pause', 'reverse'
             const speed = parseFloat($(this).data('animation-speed')) || 1; // Default speed = 1
 

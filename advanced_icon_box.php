@@ -34,19 +34,8 @@ function register_advanced_icon_assets ($widgets_manager ) {
     wp_register_script( 'advanced-icon-box-js', plugin_dir_url( __FILE__ ) . 'assets/JS/animation.js' );
     wp_enqueue_script( 'advanced-icon-box-js');
 
-//    wp_register_script('lottie-player', 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.0/lottie.min.js', [], '5.10.0', true);
-    wp_enqueue_script('lottie-web', 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.0/lottie.min.js', [], null, true);
-
+//    Lottie Animation
     wp_register_script('lottie-player', 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.0/lottie.min.js', [], '5.10.0', true);
-
-    // Register your custom initialization script
-    wp_register_script(
-        'ad-icon-box',
-        plugins_url('assets/js/ad-icon-box.js', __FILE__), // Adjust path as necessary
-        ['jquery', 'lottie-player'],
-        '1.0.0',
-        true
-    );
 
 }
 add_action( 'elementor/widgets/register', 'register_advanced_icon_assets' );

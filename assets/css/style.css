@@ -23,24 +23,7 @@
     width: 100%;
 }
 
-
-/*Hover*/
-
-/*.advance_icon_box_hover_animation {*/
-/*    transition: all 0.3s ease;*/
-/*}*/
-
-/*.advance_icon_box_hover_animation.elementor-animation-grow:hover {*/
-/*    transform: scale(1.1);*/
-/*}*/
-
-/*.advance_icon_box_hover_animation.elementor-animation-fade:hover {*/
-/*    opacity: 0.7;*/
-/*}*/
-
-
-
-/*predefined*/
+/************************************** predefined ******************************************/
 .advance_icon_box{
     position:relative;
 }
@@ -98,14 +81,10 @@
     font-weight: normal;
     line-height: 1.6;
 }
+/******************************************************** predefined End **************************************************/
 
 /***************************** Container Icon Position Change *******************************************/
-/*.advance_icon_box.icon-position-top {*/
-/*    !*display: flex;*!*/
-/*    !*flex-direction: column;*!*/
-/*    !*align-items: center;*!*/
-/*    !*text-align: center;*!*/
-/*}*/
+
 .advance_icon_box_media{
     display:inline-block;
 }
@@ -116,30 +95,16 @@
 .advance_icon_box.icon-position-left {
     display: flex;
 }
-
 .advance_icon_box.icon-position-left .advance_icon_box_media {
     margin-right: 10px;
-    /*flex: 0 0 auto;*/
-    /*flex-basis: 100%;*/
 }
-.advance_icon_box.icon-position-left .advance_icon_box_content{
-    /*flex: 0 0 auto;*/
-    /*flex-basis: 100%;*/
-}
-
 .advance_icon_box.icon-position-right {
     display: flex;
     flex-direction: row-reverse;
-
 }
 
 .advance_icon_box.icon-position-right .advance_icon_box_media {
     margin-left: 10px;
-    /*flex: 0 0 auto;*/
-}
-.advance_icon_box.icon-position-right .advance_icon_box_content {
-    /*flex:1;*/
-    /*flex-basis: 100%;*/
 }
 
 /*Badge section*/
@@ -152,53 +117,45 @@
 .badge-top_left {
     top: 0;
     left: 0;
-    /*transform: translate(-50%, -50%);*/
 }
 
 .badge-top_center {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    /*transform: translate(-50%, -50%);*/
 }
 
 .badge-top_right {
     top: 0;
     right: 0;
-    /*transform: translate(50%, -50%);*/
 }
 
 .badge-center_left {
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    /*transform: translate(-50%, -50%);*/
 }
 
 .badge-center_right {
     top: 50%;
     right: 0;
     transform: translateY(-50%);
-    /*transform: translate(50%, -50%);*/
 }
 
 .badge-bottom_left {
     bottom: 0;
     left: 0;
-    /*transform: translate(-50%, 50%);*/
 }
 
 .badge-bottom_center {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    /*transform: translate(-50%, 50%);*/
 }
 
 .badge-bottom_right {
     bottom: 0;
     right: 0;
-    /*transform: translate(50%, 50%);*/
 }
 
 
